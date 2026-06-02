@@ -1,4 +1,4 @@
-import './style.css'
+import './style.css';
 'use strict';
 
 fetch('https://date.nager.at/api/v3/publicholidays/2026/NL')
@@ -46,3 +46,14 @@ fetch('https://date.nager.at/api/v3/publicholidays/2026/BE')
       document.getElementById('error-message').textContent = 
         `Er ging iets mis: ${error.message}`;
   });
+
+const LandenKaarten = document.getElementById('landen-kaarten');
+const landen = ['NL', 'BE', 'DE', 'FR', 'ES'];
+landen.forEach(land => {
+  const kaart = document.createElement('article');
+  const landNaam = document.createElement('h2');
+
+  landNaam.textContent = land;
+  kaart.appendChild(landNaam);
+  LandenKaarten.appendChild(kaart);
+});
