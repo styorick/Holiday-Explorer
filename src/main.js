@@ -49,11 +49,22 @@ fetch('https://date.nager.at/api/v3/publicholidays/2026/BE')
 
 const LandenKaarten = document.getElementById('landen-kaarten');
 const landen = ['NL', 'BE', 'DE', 'FR', 'ES'];
-landen.forEach(land => {
-  const kaart = document.createElement('article');
-  const landNaam = document.createElement('h2');
+fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flags')
+  .then(response => response.json())
+  .then(countries => {
+    const gefilterdeLanden = countries.filter(country => 
+      landen.includes(country.cca2)
+    );
+    gefilterdeLanden.forEach(land => {
+      const kaart = document.createElement('article');
+      const landNaam = document.createElement('h2');
+      const vlag = document.createElement('img');
 
-  landNaam.textContent = land;
-  kaart.appendChild(landNaam);
-  LandenKaarten.appendChild(kaart);
-});
+      landNaam.textContent = land.name.common;
+      vlag.src = land.flags.png;
+      kaart.appendChild(landNaam);
+      kaart.appendChild(vlag);
+      LandenKaarten.appendChild(kaart);
+    })
+  })
+  .catch(error => console.error('Er ging iets mis:', error));
