@@ -11,12 +11,24 @@ fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flags')
   .then(data => console.log(data))
   .catch(error => console.error('Er ging iets mis:', error));
 
-fetch('https://date.nager.at/api/v3/publicholidays/2026/BE')
-  .then(response => response.json())
-  .then(feestdagen => {
-    const feestdagenlijst = document.getElementById('feestdagen-lijst');
+async function getFeestdagen(landcode) {
+  try {
+    const response = await fetch(`https://date.nager.at/api/v3/publicholidays/2026/${landcode}`);
+    const feestdagen = await response.json();
+    return feestdagen;
+  } catch (error) {
+    console.error('Er ging iets mis:', error);
+    throw error;
+  }
+}
 
-    feestdagen.forEach(feestdag => {
+function showFeestdagen(feestdagen) {
+  
+  const feestdagenlijst = document.getElementById('feestdagen-lijst');
+  if (feestdagenlijst) {
+    feestdagenlijst.innerHTML = '';
+  }
+  feestdagen.forEach(feestdag => {
       const tr = document.createElement('tr');
       const tdDatum = document.createElement('td');
       const tdLocalNaam = document.createElement('td');
@@ -25,7 +37,7 @@ fetch('https://date.nager.at/api/v3/publicholidays/2026/BE')
       const tdType = document.createElement('td');
       const tdGlobaal = document.createElement('td');
 
-      tdDatum.textContent = feestdag.date;
+      tdDatum.textContent = new Date(feestdag.date).toLocaleDateString('nl-BE', { day: '2-digit', month: '2-digit', year: 'numeric' });
       tdLocalNaam.textContent = feestdag.localName;
       tdEngelseNaam.textContent = feestdag.name;
       tdLandCode.textContent = feestdag.countryCode;
@@ -40,12 +52,8 @@ fetch('https://date.nager.at/api/v3/publicholidays/2026/BE')
       tr.appendChild(tdGlobaal);
 
       feestdagenlijst.appendChild(tr);
-    })
   })
-  .catch(error => {
-      document.getElementById('error-message').textContent = 
-        `Er ging iets mis: ${error.message}`;
-  });
+}
 
 const LandenKaarten = document.getElementById('landen-kaarten');
 const landen = ['NL', 'BE', 'DE', 'FR', 'ES'];
@@ -64,6 +72,12 @@ fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flags')
       vlag.src = land.flags.png;
       kaart.appendChild(landNaam);
       kaart.appendChild(vlag);
+      kaart.addEventListener('click', () => {
+        getFeestdagen(land.cca2)
+          .then(feestdagen => {
+            showFeestdagen(feestdagen);
+          });
+      });
       LandenKaarten.appendChild(kaart);
     })
   })
