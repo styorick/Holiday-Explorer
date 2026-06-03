@@ -1,84 +1,107 @@
 import './style.css';
 'use strict';
 
-fetch('https://date.nager.at/api/v3/publicholidays/2026/NL')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Er ging iets mis:', error));
-
-fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flags')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Er ging iets mis:', error));
-
-async function getFeestdagen(landcode) {
+async function getHolidays(landcode) {
   try {
     const response = await fetch(`https://date.nager.at/api/v3/publicholidays/2026/${landcode}`);
-    const feestdagen = await response.json();
-    return feestdagen;
+    const holidays = await response.json();
+    return holidays;
   } catch (error) {
     console.error('Er ging iets mis:', error);
     throw error;
   }
 }
 
-function showFeestdagen(feestdagen) {
+function showHolidays(holidays) {
   
-  const feestdagenlijst = document.getElementById('feestdagen-lijst');
-  if (feestdagenlijst) {
-    feestdagenlijst.innerHTML = '';
+  const holidaysList = document.getElementById('holidays-list');
+  if (holidaysList) {
+    holidaysList.innerHTML = '';
   }
-  feestdagen.forEach(feestdag => {
+  holidays.forEach(holiday => {
       const tr = document.createElement('tr');
-      const tdDatum = document.createElement('td');
-      const tdLocalNaam = document.createElement('td');
-      const tdEngelseNaam = document.createElement('td');
-      const tdLandCode = document.createElement('td');
+      const tdDate = document.createElement('td');
+      const tdLocalName = document.createElement('td');
+      const tdEnglishName = document.createElement('td');
+      const tdCountryCode = document.createElement('td');
       const tdType = document.createElement('td');
-      const tdGlobaal = document.createElement('td');
+      const tdGlobal = document.createElement('td');
 
-      tdDatum.textContent = new Date(feestdag.date).toLocaleDateString('nl-BE', { day: '2-digit', month: '2-digit', year: 'numeric' });
-      tdLocalNaam.textContent = feestdag.localName;
-      tdEngelseNaam.textContent = feestdag.name;
-      tdLandCode.textContent = feestdag.countryCode;
-      tdType.textContent = feestdag.types.join(', ');
-      tdGlobaal.textContent = feestdag.global ? 'Ja' : 'Nee';
+      tdDate.textContent = new Date(holiday.date).toLocaleDateString('nl-BE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      tdLocalName.textContent = holiday.localName;
+      tdEnglishName.textContent = holiday.name;
+      tdCountryCode.textContent = holiday.countryCode;
+      tdType.textContent = holiday.types.join(', ');
+      tdGlobal.textContent = holiday.global ? 'Ja' : 'Nee';
       
-      tr.appendChild(tdDatum);
-      tr.appendChild(tdEngelseNaam);
-      tr.appendChild(tdLocalNaam);
-      tr.appendChild(tdLandCode);
+      tr.appendChild(tdDate);
+      tr.appendChild(tdEnglishName);
+      tr.appendChild(tdLocalName);
+      tr.appendChild(tdCountryCode);
       tr.appendChild(tdType);
-      tr.appendChild(tdGlobaal);
+      tr.appendChild(tdGlobal);
 
-      feestdagenlijst.appendChild(tr);
+      holidaysList.appendChild(tr);
   })
 }
 
-const LandenKaarten = document.getElementById('landen-kaarten');
-const landen = ['NL', 'BE', 'DE', 'FR', 'ES'];
-fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flags')
-  .then(response => response.json())
-  .then(countries => {
-    const gefilterdeLanden = countries.filter(country => 
-      landen.includes(country.cca2)
-    );
-    gefilterdeLanden.forEach(land => {
-      const kaart = document.createElement('article');
-      const landNaam = document.createElement('h2');
-      const vlag = document.createElement('img');
+const countryCards = document.getElementById('countries-cards');
+async function getAvailableCountries() {
+  try {
+    const response = await fetch('https://date.nager.at/api/v3/AvailableCountries');
+    const countries = await response.json();
+    return countries;
+  } catch (error) {
+    console.error('Er ging iets mis:', error);
+    throw error;
+  }
+}
 
-      landNaam.textContent = land.name.common;
-      vlag.src = land.flags.png;
-      kaart.appendChild(landNaam);
-      kaart.appendChild(vlag);
-      kaart.addEventListener('click', () => {
-        getFeestdagen(land.cca2)
-          .then(feestdagen => {
-            showFeestdagen(feestdagen);
+async function getCountryInfo() {
+  try {
+    const response = await fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flags');
+    const countries = await response.json();
+    return countries;
+  } catch (error) {
+    console.error('Er ging iets mis:', error);
+    throw error;
+  }
+}
+
+async function loadCountries() {
+  try {
+    const avalailableCountries = await getAvailableCountries();
+    const countryInfo = await getCountryInfo();
+    
+    const countryCodes = avalailableCountries.map(country => country.countryCode);
+    const filteredCountries = countryInfo.filter(country =>
+      countryCodes.includes(country.cca2)
+    );
+    return filteredCountries;
+  } catch (error) {
+    console.error('Er ging iets mis:', error);
+    throw error;
+  }
+}
+
+loadCountries()
+  .then(countries => {
+    countries.forEach(country => {
+      const card = document.createElement('article');
+      const countryName = document.createElement('h2');
+      const flag = document.createElement('img');
+
+      countryName.textContent = country.name.common;
+      flag.src = country.flags.png;
+      card.appendChild(countryName);
+      card.appendChild(flag);
+      card.addEventListener('click', () => {
+        getHolidays(country.cca2)
+          .then(holidays => {
+            showHolidays(holidays);
           });
       });
-      LandenKaarten.appendChild(kaart);
+      countryCards.appendChild(card);
     })
   })
   .catch(error => console.error('Er ging iets mis:', error));
