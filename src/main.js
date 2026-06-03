@@ -11,6 +11,16 @@ searchInput.addEventListener('input', () => {
   });
 });
 
+// add event listener to continent filter
+const continentFilter = document.getElementById('continent-filter');
+continentFilter.addEventListener('change', () => {
+  const selectedContinent = continentFilter.value;
+  document.querySelectorAll('article').forEach(card => {
+    const region = card.dataset.region;
+    card.style.display = selectedContinent === '' || region === selectedContinent ? 'block' : 'none';
+  });
+});
+
 // fetch holidays for a specific country code
 async function getHolidays(landcode) {
   try {
@@ -73,7 +83,7 @@ async function getAvailableCountries() {
 // fetch country info from restcountries API
 async function getCountryInfo() {
   try {
-    const response = await fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flags');
+    const response = await fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flags,region');
     const countries = await response.json();
     return countries;
   } catch (error) {
@@ -110,6 +120,7 @@ loadCountries()
       flag.src = country.flags.png;
       card.appendChild(countryName);
       card.appendChild(flag);
+      card.dataset.region = country.region; 
       card.addEventListener('click', () => {
         getHolidays(country.cca2)
           .then(holidays => {
