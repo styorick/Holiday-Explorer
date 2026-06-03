@@ -1,6 +1,17 @@
 import './style.css';
 'use strict';
 
+// add event listener to search input
+const searchInput = document.getElementById('search-input');
+searchInput.addEventListener('input', () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  document.querySelectorAll('article').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+  });
+});
+
+// fetch holidays for a specific country code
 async function getHolidays(landcode) {
   try {
     const response = await fetch(`https://date.nager.at/api/v3/publicholidays/2026/${landcode}`);
@@ -12,6 +23,7 @@ async function getHolidays(landcode) {
   }
 }
 
+// display holidays in the table
 function showHolidays(holidays) {
   
   const holidaysList = document.getElementById('holidays-list');
@@ -45,6 +57,7 @@ function showHolidays(holidays) {
   })
 }
 
+// fetch available countries and country info, then display them as cards
 const countryCards = document.getElementById('countries-cards');
 async function getAvailableCountries() {
   try {
@@ -57,6 +70,7 @@ async function getAvailableCountries() {
   }
 }
 
+// fetch country info from restcountries API
 async function getCountryInfo() {
   try {
     const response = await fetch('https://restcountries.com/v3.1/all?fields=name,cca2,flags');
@@ -68,6 +82,7 @@ async function getCountryInfo() {
   }
 }
 
+// load countries, filter them based on available countries, and display them as cards
 async function loadCountries() {
   try {
     const avalailableCountries = await getAvailableCountries();
