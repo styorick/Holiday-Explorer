@@ -56,6 +56,17 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('theme', document.body.classList.toggle('dark-theme') ? 'dark-theme' : '');
 });
 
+// add event listener to favourites filter
+const favouritesFilter = document.getElementById('favourites-filter');
+favouritesFilter.addEventListener('change', () => {
+  const showFavouritesOnly = favouritesFilter.checked;
+  document.querySelectorAll('article').forEach(card => {
+    const countryCode = card.dataset.code;
+    const isFavourite = favourites.includes(countryCode);
+    card.style.display = !showFavouritesOnly || isFavourite ? 'block' : 'none';
+  });
+});
+
 //=======================
 //        FUNCTIONS    
 //=======================
@@ -165,11 +176,14 @@ loadCountries()
       card.appendChild(flag);
       card.appendChild(favobutton); 
       card.dataset.region = country.region;
+      card.dataset.code = country.cca2;
+
       //stop double click event on favobutton
       function stopBubbling(evt) {
         evt.stopPropagation();
         evt.cancelBubble = true;
       }
+
       favobutton.addEventListener('click', (evt) => {
         stopBubbling(evt);
 
