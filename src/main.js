@@ -1,6 +1,10 @@
 import './style.css';
 'use strict';
 
+//=======================
+//        BUTTONS      
+//=======================
+
 // add event listener to search input
 const searchInput = document.getElementById('search-input');
 searchInput.addEventListener('input', () => {
@@ -20,6 +24,17 @@ continentFilter.addEventListener('change', () => {
     card.style.display = selectedContinent === '' || region === selectedContinent ? 'block' : 'none';
   });
 });
+
+const sortButton = document.getElementById('sort-button');
+sortButton.addEventListener('click', () => {
+  const countries = Array.from(document.querySelectorAll('article'));
+  countries.sort((a, b) => a.textContent.localeCompare(b.textContent));
+  countries.forEach(country => countryCards.appendChild(country));
+});
+
+//=======================
+//        FUNCTIONS    
+//=======================
 
 // fetch holidays for a specific country code
 async function getHolidays(landcode) {
