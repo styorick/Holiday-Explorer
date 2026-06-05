@@ -1,6 +1,5 @@
 body {
-  background-color: #fafafa;
-  color: #333;
+  background-color: #Fafafa;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,6 +47,44 @@ body.dark-theme {
 .search-input::placeholder,
 .search-icon  {
     color: rgba(0,0,0,0.25);
+}
+
+#favourites-filter {
+  appearance: none;
+  height: 32px;
+  width: 32px;
+  border: 2px solid #AAC1F0;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  place-content: center
+}
+
+#favourites-filter::before {
+  content: '';
+  background-color: #AAC1F0;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #AAC1F08a;
+  background-image: url('/check.svg');
+  background-size: cover;
+  background-position: center;
+  rotate: -360deg;
+  scale: 0;
+  opacity: 0;
+  transition: 200ms ease;
+}
+
+#favourites-filter:checked::before {
+  rotate: 0deg;
+  scale: 1;
+  opacity: 1;
+}
+
+#favourites-filter:focus-visible {
+  outline: 2px solid #AAC1F0;
+  outline-offset: 2px;
 }
 
 .filter {
