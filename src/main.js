@@ -169,7 +169,7 @@ loadCountries()
 
       countryName.textContent = country.name.common;
       flag.src = country.flags.png;
-      favobutton.textContent = 'Favoriet';
+      favobutton.textContent = 'Favourite';
 
 
       card.appendChild(countryName);

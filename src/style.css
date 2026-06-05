@@ -1,31 +1,45 @@
-body.dark-theme {
-  background-color: #333;
-  color: #fff;
-}
-
-body.light-theme {
-  background-color: #fff;
+body {
+  background-color: #fafafa;
   color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+body.dark-theme {
+  background-color: #0D0D1A;
+  color: #8899BB;
+}
+ 
+#theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 
 .search {
-    width:max-content;
-    display:flex;
-    align-items:center;
-    padding: 14px;
-    border-radius: 28px;
-    background-color: #f6f6f6
+  width:max-content;
+  display:flex;
+  align-items:center;
+  padding: 14px;
+  border-radius: 28px;
+  background-color: #f6f6f6
 }
 
 .search-input {
-    fontsize: 16px;
-    font-family: 'Arial', sans-serif;
-    color: #333;
-    margin-left: 14px;
-    outline: none;
-    border: none;
-    background: transparent;
+  fontsize: 16px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin-left: 14px;
+  outline: none;
+  border: none;
+  background: transparent;
 }
 
 .search-input::placeholder,
@@ -34,13 +48,56 @@ body.light-theme {
 }
 
 .filter {
-    margin-left: 20px;
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    font-family: 'Arial', sans-serif;
-    color: #333;
-    outline: none;
+  margin-left: 20px;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  outline: none;
+}
+
+#countries-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  padding: 20px;
+}
+
+article {
+  width: 200px;
+  height: auto
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+body.dark-theme article {
+  background-color: #12122A;
+  border: 0.5px solid #3A005C;
+}
+
+article h2 {
+  font-size: 1rem;
+  margin: 0 0 5px 0;
+  min-height: 2.5rem;
+}
+
+article img {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+}
+
+article button {
+  margin-top: auto;
+  align-self: flex-end;
 }

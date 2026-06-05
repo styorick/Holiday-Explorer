@@ -11,36 +11,41 @@
   <body>
     <div id="app"></div>
 
-    <h1>Holiday Explorer</h1>
-    <p>Deze tool helpt u de vakantieperioden van uw bestemming te ontdekken zodat u weet wanneer het hoogseizoen of laagseizoen is</p>
-    
-    <!-- search bar -->
-    <div class="search">
-      <span class="search-icon material-symbols-outlined">search</span>
-      <input class="search-input" id="search-input" type="text" placeholder="Zoek een land..." />
-    </div>
-
     <!--theme switcher-->
     <button id="theme-toggle" class="theme-switch">Switch Theme</button>
 
-    <!-- filter for continents -->
-    <select class="filter" id="continent-filter">
-      <option value="">All continents</option>
-      <option value="Europe">Europe</option>
-      <option value="Americas">Americas</option>
-      <option value="Asia">Asia</option>
-      <option value="Africa">Africa</option>
-      <option value="Oceania">Oceania</option>
-    </select>
+    <h1>Holiday Explorer</h1>
+    <p>Deze tool helpt u de vakantieperioden van uw bestemming te ontdekken zodat u weet wanneer het hoogseizoen of laagseizoen is</p>
+    
+    <div class="toolbar">
+      <!-- search bar -->
+      <div class="search">
+        <span class="search-icon material-symbols-outlined">search</span>
+        <input class="search-input" id="search-input" type="text" placeholder="Zoek een land..." />
+      </div>
 
-    <!-- sort button -->
-    <button id="sort-button">
-      <img src="/A-Z-icon.svg" alt="Sort A-Z" />
-    </button>
+      <!-- filter for favourites -->
+      <input type="checkbox" id="favourites-filter" />
+      <label for="favourites-filter">Show favourites only</label>
+    </div>
+    
+    <div class="stoolbar">
+      <!-- filter for continents -->
+      <select class="filter" id="continent-filter">
+        <option value="">All continents</option>
+        <option value="Europe">Europe</option>
+        <option value="Americas">Americas</option>
+        <option value="Asia">Asia</option>
+        <option value="Africa">Africa</option>
+        <option value="Oceania">Oceania</option>
+      </select>
 
-    <!-- filter for favourites -->
-    <input type="checkbox" id="favourites-filter" />
-    <label for="favourites-filter">Show favourites only</label>
+      <!-- sort button -->
+      <button id="sort-button">
+        <img src="/A-Z-icon.svg" alt="Sort A-Z" />
+      </button>
+    </div>
+    
     
     <!-- table for holidays -->
     <table>
