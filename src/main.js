@@ -51,9 +51,12 @@ sortButton.addEventListener('click', () => {
   countries.forEach(country => countryCards.appendChild(country));
 });
 
+// add event listeren to theme toggle
 const themeToggle = document.getElementById('theme-toggle');
 themeToggle.addEventListener('click', () => {
-  localStorage.setItem('theme', document.body.classList.toggle('dark-theme') ? 'dark-theme' : '');
+  const darkMode = document.body.classList.toggle('dark-theme')
+  themeToggle.querySelector('img').src = darkMode ? '/dark-mode.svg' : '/light-mode.svg';
+  localStorage.setItem('theme', darkMode ? 'dark-theme' : '');
 });
 
 // add event listener to favourites filter
