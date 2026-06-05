@@ -169,10 +169,12 @@ loadCountries()
       const countryName = document.createElement('h2');
       const flag = document.createElement('img');
       const favobutton = document.createElement('button');
+      const favoIcon = document.createElement('img')
 
       countryName.textContent = country.name.common;
       flag.src = country.flags.png;
-      favobutton.textContent = 'Favourite';
+      favoIcon.src = '/heart-grey.svg';
+      favobutton.appendChild(favoIcon)
 
 
       card.appendChild(countryName);
@@ -192,10 +194,10 @@ loadCountries()
 
         if (favourites.includes(country.cca2)) {
             favourites = favourites.filter(code => code !== country.cca2);
-            favobutton.textContent = 'Favourite';
+            favoIcon.src = '/heart-grey.svg';
           } else {
             favourites.push(country.cca2);
-            favobutton.textContent = 'Unfavourite';
+            favoIcon.src = '/heart-colour.svg';
           }
         localStorage.setItem('favourites', JSON.stringify(favourites));
      });

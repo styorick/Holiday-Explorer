@@ -36,7 +36,7 @@ body.dark-theme {
 }
 
 .search-input {
-  fontsize: 16px;
+  font-size: 16px;
   font-family: 'Arial', sans-serif;
   color: #333;
   margin-left: 14px;
@@ -72,15 +72,14 @@ body.dark-theme {
 
 article {
   width: 200px;
-  height: auto
-  display: flex;
-  flex-direction: column;
+  height: auto;
   text-align: center;
-  align-items: center;
   border: 1px solid #ccc;
+  background-color: #F0EEFF;
   border-radius: 8px;
   padding: 10px;
   cursor: pointer;
+  position: relative
 }
 
 body.dark-theme article {
@@ -96,11 +95,17 @@ article h2 {
 
 article img {
   width: 100%;
-  height: 130px;
+  height: auto;
   object-fit: contain;
 }
 
 article button {
-  margin-top: auto;
-  align-self: flex-end;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }
+
