@@ -25,10 +25,18 @@ continentFilter.addEventListener('change', () => {
   });
 });
 
+// add event listener to sort button
 const sortButton = document.getElementById('sort-button');
+let sortasc = true;
 sortButton.addEventListener('click', () => {
+  sortasc = !sortasc;
+
   const countries = Array.from(document.querySelectorAll('article'));
-  countries.sort((a, b) => a.textContent.localeCompare(b.textContent));
+  countries.sort((a, b) => {
+    const nameA = a.textContent.toLowerCase();
+    const nameB = b.textContent.toLowerCase();
+    return sortasc ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+  });
   countries.forEach(country => countryCards.appendChild(country));
 });
 
