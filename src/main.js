@@ -6,8 +6,10 @@ import './style.css';
 
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme) {
-  document.body.classList = savedTheme
+  document.body.classList = savedTheme;
 }
+
+let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
 
 
 //=======================
@@ -152,12 +154,29 @@ loadCountries()
       const card = document.createElement('article');
       const countryName = document.createElement('h2');
       const flag = document.createElement('img');
+      const favobutton = document.createElement('button');
 
       countryName.textContent = country.name.common;
       flag.src = country.flags.png;
+      favobutton.textContent = 'Favoriet';
+
+
       card.appendChild(countryName);
       card.appendChild(flag);
-      card.dataset.region = country.region; 
+      card.appendChild(favobutton); 
+      card.dataset.region = country.region;
+
+      favobutton.addEventListener('click', () => {
+        if (favourites.includes(country.cca2)) {
+            favourites = favourites.filter(code => code !== country.cca2);
+            favobutton.textContent = 'Favourite';
+          } else {
+            favourites.push(country.cca2);
+            favobutton.textContent = 'Unfavourite';
+          }
+        localStorage.setItem('favourites', JSON.stringify(favourites));
+     });
+
       card.addEventListener('click', () => {
         getHolidays(country.cca2)
           .then(holidays => {
