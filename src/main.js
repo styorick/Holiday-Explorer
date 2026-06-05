@@ -165,6 +165,13 @@ loadCountries()
       card.appendChild(flag);
       card.appendChild(favobutton); 
       card.dataset.region = country.region;
+      //stop double click event on favobutton
+      function stopBubbling(evt) {
+        evt.stopPropagation();
+        evt.cancelBubble = true;
+      }
+      favobutton.addEventListener('click', (evt) => {
+        stopBubbling(evt);
 
       favobutton.addEventListener('click', () => {
         if (favourites.includes(country.cca2)) {
