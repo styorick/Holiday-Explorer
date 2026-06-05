@@ -1,5 +1,14 @@
 import './style.css';
 'use strict';
+//=======================
+//       STORAGE      
+//=======================
+
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  document.body.classList = savedTheme
+}
+
 
 //=======================
 //        BUTTONS      
@@ -38,6 +47,11 @@ sortButton.addEventListener('click', () => {
     return sortasc ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
   });
   countries.forEach(country => countryCards.appendChild(country));
+});
+
+const themeToggle = document.getElementById('theme-toggle');
+themeToggle.addEventListener('click', () => {
+  localStorage.setItem('theme', document.body.classList.toggle('dark-theme') ? 'dark-theme' : '');
 });
 
 //=======================

@@ -1,3 +1,14 @@
+body.dark-theme {
+  background-color: #333;
+  color: #fff;
+}
+
+body.light-theme {
+  background-color: #fff;
+  color: #333;
+}
+
+
 .search {
     width:max-content;
     display:flex;
