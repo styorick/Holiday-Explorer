@@ -187,7 +187,6 @@ loadCountries()
       favobutton.addEventListener('click', (evt) => {
         stopBubbling(evt);
 
-      favobutton.addEventListener('click', () => {
         if (favourites.includes(country.cca2)) {
             favourites = favourites.filter(code => code !== country.cca2);
             favobutton.textContent = 'Favourite';
