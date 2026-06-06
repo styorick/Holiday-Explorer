@@ -177,6 +177,9 @@ loadCountries()
       flag.classList.add('lazy');
       favoIcon.src = '/heart-grey.svg';
       favobutton.appendChild(favoIcon)
+      if (favourites.includes(country.cca2)) {
+        favoIcon.src = '/heart-colour.svg';
+      }
 
 
       card.appendChild(countryName);
