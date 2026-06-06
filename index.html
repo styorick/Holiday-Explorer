@@ -46,22 +46,28 @@
       <label for="favourites-filter">Show favourites only</label>
     </div>
   
-    <!-- table for holidays -->
-    <table>
-      <thead>
-        <tr>
-          <th>Datum</th>
-          <th>Naam</th>
-          <th>Lokale naam</th>
-          <th>Landcode</th>
-          <th>Types</th>
-          <th>Globaal</th>
-        </tr>
-      </thead>
-      <tbody id="holidays-list">
-      
-      </tbody>
-    </table>
+    <div id="popup">
+      <div id="popup-content">
+        <button id="close-popup">✕</button>
+
+        <!-- table for holidays -->
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Name</th>
+              <th>Local name</th>
+              <th>country code</th>
+              <th>Types</th>
+              <th>Global?</th>
+            </tr>
+          </thead>
+          <tbody id="holidays-list">
+          
+          </tbody>
+        </table>
+      </div>
+    </div>
 
     <!-- section for country cards -->
     <section id="countries-cards"></section>

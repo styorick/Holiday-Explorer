@@ -81,14 +81,13 @@ async function getHolidays(landcode) {
     const holidays = await response.json();
     return holidays;
   } catch (error) {
-    console.error('Er ging iets mis:', error);
+    console.error('There is something wrong:', error);
     throw error;
   }
 }
 
 // display holidays in the table
 function showHolidays(holidays) {
-  
   const holidaysList = document.getElementById('holidays-list');
   if (holidaysList) {
     holidaysList.innerHTML = '';
@@ -128,7 +127,7 @@ async function getAvailableCountries() {
     const countries = await response.json();
     return countries;
   } catch (error) {
-    console.error('Er ging iets mis:', error);
+    console.error('There is something wrong:', error);
     throw error;
   }
 }
@@ -140,7 +139,7 @@ async function getCountryInfo() {
     const countries = await response.json();
     return countries;
   } catch (error) {
-    console.error('Er ging iets mis:', error);
+    console.error('There is something wrong:', error);
     throw error;
   }
 }
@@ -157,7 +156,7 @@ async function loadCountries() {
     );
     return filteredCountries;
   } catch (error) {
-    console.error('Er ging iets mis:', error);
+    console.error('There is something wrong:', error);
     throw error;
   }
 }
@@ -202,13 +201,21 @@ loadCountries()
         localStorage.setItem('favourites', JSON.stringify(favourites));
      });
 
+
       card.addEventListener('click', () => {
+        const popup = document.getElementById('popup')
+
         getHolidays(country.cca2)
           .then(holidays => {
             showHolidays(holidays);
+            popup.classList.add('open')
           });
+        const closePopup = document.getElementById('close-popup');
+        closePopup.addEventListener('click', () => {
+          popup.classList.remove('open');
+        });
       });
       countryCards.appendChild(card);
     })
   })
-  .catch(error => console.error('Er ging iets mis:', error));
+  .catch(error => console.error('There is something wrong:', error));
