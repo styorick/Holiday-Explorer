@@ -189,6 +189,11 @@ article {
   position: relative
 }
 
+article:hover {
+  transform: translateY(-5px);
+  transition: transform 0.2s ease;
+}
+
 body.dark-theme article {
   background-color: #12122A;
   border: 0.5px solid #3A005C;

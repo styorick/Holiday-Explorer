@@ -75,10 +75,13 @@ favouritesFilter.addEventListener('change', () => {
 //        FUNCTIONS    
 //=======================
 
+const yearFilter = document.getElementById('year-filter');
+
 // fetch holidays for a specific country code
-async function getHolidays(landcode) {
+async function getHolidays(countrycode) {
+  const year = yearFilter.value;
   try {
-    const response = await fetch(`https://date.nager.at/api/v3/publicholidays/2026/${landcode}`);
+    const response = await fetch(`https://date.nager.at/api/v3/publicholidays/${year}/${countrycode}`);
     const holidays = await response.json();
     return holidays;
   } catch (error) {
@@ -107,7 +110,7 @@ function showHolidays(holidays) {
       tdEnglishName.textContent = holiday.name;
       tdCountryCode.textContent = holiday.countryCode;
       tdType.textContent = holiday.types.join(', ');
-      tdGlobal.textContent = holiday.global ? 'Ja' : 'Nee';
+      tdGlobal.textContent = holiday.global ? 'Yes' : 'No';
       
       tr.appendChild(tdDate);
       tr.appendChild(tdEnglishName);
@@ -244,7 +247,7 @@ loadCountries()
 
   const closePopup = document.getElementById('close-popup');
   closePopup.addEventListener('click', () => {
-    popup.classList.remove('open');
+    document.getElementById('popup').classList.remove('open');
   });
 
     

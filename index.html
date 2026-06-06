@@ -17,7 +17,8 @@
     </button>
 
     <h1>Holiday Explorer</h1>
-    <p>Deze tool helpt u de vakantieperioden van uw bestemming te ontdekken zodat u weet wanneer het hoogseizoen of laagseizoen is</p>
+    <p>This tools helps you discover the holidays of different countries. this Will help you see whether it's high season or low season in those countries.</p>
+    <p>Note: not every country is available due to limited data in the Nager.Date API.</p>
     
     <div class="toolbar">
       <!-- search bar -->
@@ -34,6 +35,14 @@
         <option value="Asia">Asia</option>
         <option value="Africa">Africa</option>
         <option value="Oceania">Oceania</option>
+      </select>
+
+      <select id="year-filter" class="filter">
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+        <option value="2026" selected>2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
       </select>
 
       <!-- sort button -->
