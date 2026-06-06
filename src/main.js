@@ -213,13 +213,10 @@ loadCountries()
             showHolidays(holidays);
             popup.classList.add('open')
           });
-        const closePopup = document.getElementById('close-popup');
-        closePopup.addEventListener('click', () => {
-          popup.classList.remove('open');
-        });
       });
       countryCards.appendChild(card);
-    })
+    });
+    
     //lazy-images
     const lazyImages = document.querySelectorAll('img.lazy');
     const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -238,5 +235,16 @@ loadCountries()
       threshold: 0.1
     });
     lazyImages.forEach(img => imageObserver.observe(img)); 
+
   })
   .catch(error => console.error('There is something wrong:', error));
+
+  const closePopup = document.getElementById('close-popup');
+  closePopup.addEventListener('click', () => {
+    popup.classList.remove('open');
+  });
+
+    
+    
+
+  
