@@ -172,7 +172,9 @@ loadCountries()
       const favoIcon = document.createElement('img')
 
       countryName.textContent = country.name.common;
-      flag.src = country.flags.png;
+      flag.dataset.src = country.flags.png;
+      flag.src = '';
+      flag.classList.add('lazy');
       favoIcon.src = '/heart-grey.svg';
       favobutton.appendChild(favoIcon)
 
@@ -200,9 +202,9 @@ loadCountries()
             favoIcon.src = '/heart-colour.svg';
           }
         localStorage.setItem('favourites', JSON.stringify(favourites));
-     });
+      });
 
-
+      //click event on card
       card.addEventListener('click', () => {
         const popup = document.getElementById('popup')
 
@@ -218,5 +220,23 @@ loadCountries()
       });
       countryCards.appendChild(card);
     })
+    //lazy-images
+    const lazyImages = document.querySelectorAll('img.lazy');
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          
+          img.src = img.dataset.src;
+          img.classList.remove('lazy');
+          
+          observer.unobserve(img);
+        }
+      });
+    }, {
+      rootMargin: '100px 0px',
+      threshold: 0.1
+    });
+    lazyImages.forEach(img => imageObserver.observe(img)); 
   })
   .catch(error => console.error('There is something wrong:', error));
