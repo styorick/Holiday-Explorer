@@ -15,26 +15,27 @@ let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
 //=======================
 //        BUTTONS      
 //=======================
-
-// add event listener to search input
 const searchInput = document.getElementById('search-input');
-searchInput.addEventListener('input', () => {
-  const searchTerm = searchInput.value.toLowerCase();
-  document.querySelectorAll('article').forEach(card => {
-    const text = card.textContent.toLowerCase();
-    card.style.display = text.includes(searchTerm) ? 'block' : 'none';
-  });
-});
-
-// add event listener to continent filter
 const continentFilter = document.getElementById('continent-filter');
-continentFilter.addEventListener('change', () => {
-  const selectedContinent = continentFilter.value;
+
+//creating a generic function
+function filterCards() {
   document.querySelectorAll('article').forEach(card => {
+    const selectedContinent = continentFilter.value;
+    const searchTerm = searchInput.value.toLowerCase();
     const region = card.dataset.region;
-    card.style.display = selectedContinent === '' || region === selectedContinent ? 'block' : 'none';
+    const text = card.textContent.toLowerCase();
+
+    const matchContintent = selectedContinent === '' || region === selectedContinent;
+    const matchSearch = text.includes(searchTerm);
+
+     card.style.display = matchContintent && matchSearch ? 'block' : 'none';
   });
-});
+}
+
+// add event listener to search input nd continent filter
+searchInput.addEventListener('input', filterCards);
+continentFilter.addEventListener('change', filterCards);
 
 // add event listener to sort button
 const sortButton = document.getElementById('sort-button');
